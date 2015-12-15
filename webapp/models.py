@@ -45,11 +45,14 @@ class Plant(models.Model):
 @python_2_unicode_compatible
 class PlantCommonName(models.Model):
     common_name = models.CharField(max_length=100)
-    primary_common_name = models.BooleanField()
+    primary = models.BooleanField()
     plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.common_name
+
+    def is_primary_common_name(self):
+        return self.primary
 
 
 @python_2_unicode_compatible
@@ -57,9 +60,15 @@ class ImageInfo(models.Model):
     file_name = models.CharField(max_length=75)
     image_width = models.IntegerField()
     image_height = models.IntegerField()
-    primary_image = models.BooleanField()
+    primary = models.BooleanField()
     plant = models.ForeignKey(Plant)
     color_range = models.ForeignKey(ColorRange)
 
     def __str__(self):
         return self.file_name
+
+    def is_landscape_orientation(self):
+        return True if (self.image_width >= self.image_height) else False
+
+    def is_primary_image(self):
+        return self.primary
