@@ -1,0 +1,40 @@
+body {
+    padding-top: 60px;
+    background-attachment: scroll;
+    background-color: #4c3e32;
+    background-image: url("images/layout/background.jpg");
+    background-repeat: repeat-x;
+    background-position: center top;
+}
+
+.main-container {
+    background-color: #3f5d86;
+    border: 1px solid #CCC;
+}
+
+.jumbotron {
+    max-width: 960px;
+    min-height: 200px;
+    margin-bottom: 0px;
+    background-image: url("images/layout/banner.jpg");
+    background-position: center top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    text-shadow: black 0.3em 0.3em 0.3em;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container .jumbotron {
+    border-radius: 0px;
+}
+
+.stripe-background {
+    border-bottom: 5px solid #293c56;
+    border-top: 5px solid #293c56;
+    margin-bottom: 0px;
+    background-image: url("images/layout/stripe.png");
+    background-repeat: repeat;
+    color: white;
+}

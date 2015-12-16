@@ -1,0 +1,80 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <title>Sequoia Wildflowers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'webapp/style.css' %}" />
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  </head>
+
+  <body role="document">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Sequoia Wildflowers</a>
+        </div><!--/.nav-header -->
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Wildflowers</a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!--/.container -->
+    </nav>
+
+    <div class="container main-container">
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+
+      <div class="row stripe-background">
+	<div class="col-md-12">
+	  <div class="jumbotron">
+	  </div>
+	</div>
+      </div><!-- /.row -->
+
+      <div class="row">
+	<div class="col-md-12">
+	</div>
+      </div><!-- /.row -->
+
+      <div class="row">
+	<div class="col-md-12">
+	  <ul class="list-group">
+	    <li class="list-group-item">
+	      <a href="{% url 'webapp:wildflowers_by_common_name' %}">
+		By Common Name</a>
+	    </li>
+	    <li class="list-group-item">
+	      <a href="{% url 'webapp:wildflowers_by_scientific_name' %}">
+		By Scientific Name</a>
+	    </li>
+	    <li class="list-group-item">
+	      <a href="{% url 'webapp:wildflowers_by_family' %}">
+		By Family</a>
+	    </li>
+	    <li class="list-group-item">
+	      <a href="{% url 'webapp:wildflowers_by_color_range' %}">
+		By Color</a>
+	    </li>
+	  </ul>
+	</div><!-- /.col-lg-12 -->
+      </div><!-- /.row -->
+    </div> <!-- /container -->
+
+  </body>
+</html>

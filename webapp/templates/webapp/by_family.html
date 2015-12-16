@@ -1,0 +1,16 @@
+{% if family_list %}
+<h1>This is the by family page!</h1>
+<ul>
+  {% for family in family_list %}
+  <li>
+    <p>{{ family.icon_file_name }}</p>
+    <a href="{% url 'webapp:wildflowers_family' family.id %}">
+      <p>{{ family.scientific_name }}</p>
+    </a>
+    <p>{{ family.familycommonname_set.all }}</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No families are available.</p>
+{% endif %}

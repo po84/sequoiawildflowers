@@ -1,0 +1,21 @@
+{% if plant_common_name_list %}
+<h1>This is the by common name page!</h1>
+<ul>
+  {% for plant_common_name in plant_common_name_list %}
+  <li>
+    {% for image in plant_common_name.plant.imageinfo_set.all %}
+    {% if image.primary %}
+    <p>{{ image }}</p>
+    {% endif %}
+    {% endfor %}
+    <a href="{% url 'webapp:wildflowers_detail' plant_common_name.plant_id %}">
+      <p>{{ plant_common_name }}</p>
+      <p>{{ plant_common_name.plant.scientific_name }}</p>
+      <p>{{ plant_common_name.plant.family.scientific_name }}</p>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No plant common names are available.</p>
+{% endif %}

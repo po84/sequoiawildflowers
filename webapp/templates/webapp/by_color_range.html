@@ -1,0 +1,15 @@
+{% if color_range_list %}
+<h1>This is the by color range page!</h1>
+<ul>
+  {% for color_range in color_range_list %}
+  <li>
+    <p>{{ color_range.icon_file_name }}</p>
+    <a href="{% url 'webapp:wildflowers_color_range' color_range.id %}">
+      <p>{{ color_range.color_range }}</p>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No color ranges are available.</p>
+{% endif %}

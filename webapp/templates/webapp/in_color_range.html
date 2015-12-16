@@ -1,0 +1,32 @@
+{% if plants_in_color_range_list %}
+<h1>This is the in color range page!</h1>
+
+    <h2>{{ request.kwarg }}</h2>
+<ul>
+  {% for plant in plants_in_color_range_list %}
+  <li>
+
+    {% for image in plant.imageinfo_set.all %}
+    {% if image.primary %}
+    <p>{{ image }}</p>
+    {% endif %}
+    {% endfor %}
+
+
+    <a href="{% url 'webapp:wildflowers_detail' plant.id %}">
+      <p>{{ plant }}</p>
+    </a>
+
+    {% for common_name in plant.plantcommonname_set.all %}
+    {% if common_name.primary %}
+      <p>{{ common_name }}</p>
+    {% endif %}
+    {% endfor %}
+
+    <p>plant.family.scientific_name</p>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No plants are available.</p>
+{% endif %}
