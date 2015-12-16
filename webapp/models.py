@@ -36,7 +36,8 @@ class Plant(models.Model):
     scientific_name = models.CharField(max_length=100)
     plant_type = models.CharField(max_length=50)
     date_added = models.DateField()
-    faimly = models.ForeignKey(Family)
+    family = models.ForeignKey(Family)
+    image_colors = models.ManyToManyField(ColorRange, through='ImageInfo')
 
     def __str__(self):
         return self.scientific_name
