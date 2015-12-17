@@ -1,15 +1,97 @@
 body {
+    font-size: 14px;
     padding-top: 60px;
+    padding-bottom: 30px;
     background-attachment: scroll;
     background-color: #4c3e32;
     background-image: url("images/layout/background.jpg");
     background-repeat: repeat-x;
     background-position: center top;
+    text-align: center;
+}
+
+body,td,th {
+    font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+
+    line-height:1.5em;
+}
+
+h1, h2, h3, h4 {
+	font-family: Georgia,Utopia,"Times New Roman",serif;
+	letter-spacing: 1px;
+	font-style: italic;
+	font-weight: lighter;
+}
+
+h1 {
+	color: #FFF;
+	font-size: 2.1em;
+	font-weight: 400;
+	line-height: 1.5em;
+}
+
+h2, h3, h4 {
+    color: #9CF;
+}
+
+
+a {
+	text-decoration: none;
+	color: #FF3;
+}
+
+dl {
+	margin:0;
+	padding:0;
+	line-height:1em;
+	}
+
+dl dt {
+	margin-left:35px;
+	font-style:italic;
+	text-align:left;
+	}
+
+dl dd {
+	margin-left:60px;
+	text-align:left;
+	}
+
+img {
+    border: 1px solid #333333;
+    display: block;
+    margin: 10px auto 10px auto;
+}
+
+table {
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.ImageBox {
+    width: 326px;
+    margin: 0px auto 5px;
+    border-collapse: collapse;
+}
+
+.ImageBox a {
+	width: 326px;
+	height: 245px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	background-color: #385479;
 }
 
 .main-container {
     background-color: #3f5d86;
     border: 1px solid #CCC;
+    padding-bottom: 20px;
+}
+
+.col-plug-in {
+    padding-top: 0px;
 }
 
 .jumbotron {
@@ -34,7 +116,7 @@ body {
     border-bottom: 5px solid #293c56;
     border-top: 5px solid #293c56;
     margin-bottom: 0px;
-    background-image: url("images/layout/stripe.png");
+    background-image: url("../images/layout/stripe.png");
     background-repeat: repeat;
     color: white;
 }

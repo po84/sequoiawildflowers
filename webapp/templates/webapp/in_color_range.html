@@ -1,32 +1,56 @@
+{% extends 'webapp/base.html' %}
+{% block plug_in_content %}
 {% if plants_in_color_range_list %}
-<h1>This is the in color range page!</h1>
+<div class="row">
+  <h1>Wildflowers</h1>
+</div>
 
-    <h2>{{ request.kwarg }}</h2>
-<ul>
+<div class="row">
   {% for plant in plants_in_color_range_list %}
-  <li>
-
-    {% for image in plant.imageinfo_set.all %}
-    {% if image.primary %}
-    <p>{{ image }}</p>
-    {% endif %}
-    {% endfor %}
-
-
-    <a href="{% url 'webapp:wildflowers_detail' plant.id %}">
-      <p>{{ plant }}</p>
-    </a>
+  <div class="col-md-6 col-lg-4">
 
     {% for common_name in plant.plantcommonname_set.all %}
     {% if common_name.primary %}
-      <p>{{ common_name }}</p>
+    <h3>
+      <a href="{% url 'webapp:wildflowers_detail' plant.id %}">
+	{{ common_name }}
+      </a>
+    </h3>
     {% endif %}
     {% endfor %}
 
-    <p>plant.family.scientific_name</p>
-  </li>
+    {% for image in plant.imageinfo_set.all %}
+    {% if image.primary %}
+    <div class="ImageBox">
+      <a href="{% url 'webapp:wildflowers_detail' plant.id %}">
+	<span></span>
+	<img height="243" alt="{{ image }}" src="http://placehold.it/324x243" width="324" />
+      </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+    <dl>
+      <dt>
+	<a href="{% url 'webapp:wildflowers_detail' plant.id %}">
+	  <p>{{ plant }}</p>
+	</a>
+      </dt>
+      <dd>
+	<a href="{% url 'webapp:wildflowers_family' plant.family_id %}">
+	  {{ plant.family.scientific_name }}
+	</a>
+      </dd>
+    </dl>
+  </div><!-- /.col-md-6 col-lg-4-->
   {% endfor %}
-</ul>
+</div><!-- /.row -->
 {% else %}
 <p>No plants are available.</p>
 {% endif %}
+{% endblock %}
+
+
+
+
+
+

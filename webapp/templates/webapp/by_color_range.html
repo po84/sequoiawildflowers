@@ -1,15 +1,39 @@
+{% extends 'webapp/base.html' %}
+{% block plug_in_content %}
 {% if color_range_list %}
-<h1>This is the by color range page!</h1>
-<ul>
-  {% for color_range in color_range_list %}
-  <li>
-    <p>{{ color_range.icon_file_name }}</p>
-    <a href="{% url 'webapp:wildflowers_color_range' color_range.id %}">
-      <p>{{ color_range.color_range }}</p>
-    </a>
-  </li>
-  {% endfor %}
-</ul>
+<div class="row">
+  <h1>Wildflowers by Color</h1>
+</div>
+<div class="row">
+  <div class="col-sm-3 col-md-3 col-lg-3"></div>
+  <div class="col-sm-6 col-md-6 col-lg-6">
+    <div class="row">
+      {% for color_range in color_range_list %}
+      <div class="col-sm-6 col-md-6 col-lg-6">
+	<div class="media" style="margin-left: 10px;">
+	  <div class="media-left media-middle">
+	    <a href="{% url 'webapp:wildflowers_color_range' color_range.id %}">
+	      <img class="media-object" src="http://placehold.it/100x100" alt="{{ color_range.icon_file_name }}" width="100" height="100">
+	    </a>
+	  </div>
+	  <div class="media-body media-left media-middle">
+	    <h4 class="media-heading">
+	      <a href="{% url 'webapp:wildflowers_color_range' color_range.id %}">
+		<span style="font-size: 1.5em;">{{ color_range.color_range }}</span>
+	      </a>
+	    </h4>
+	  </div>
+	</div>
+      </div><!-- /.col-md-4 col-lg-4-->
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-sm-3 col-md-3 col-lg-3"></div>
+</div><!-- /.row -->
 {% else %}
 <p>No color ranges are available.</p>
 {% endif %}
+{% endblock %}
+
+
+

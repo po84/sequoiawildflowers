@@ -1,16 +1,48 @@
+{% extends 'webapp/base.html' %}
+{% block plug_in_content %}
 {% if family_list %}
-<h1>This is the by family page!</h1>
-<ul>
-  {% for family in family_list %}
-  <li>
-    <p>{{ family.icon_file_name }}</p>
-    <a href="{% url 'webapp:wildflowers_family' family.id %}">
-      <p>{{ family.scientific_name }}</p>
-    </a>
-    <p>{{ family.familycommonname_set.all }}</p>
-  </li>
-  {% endfor %}
-</ul>
+<div class="row">
+  <h1>Wildflowers by Family</h1>
+</div>
+<div class="row">
+  <div class="col-sm-1 col-md-1"></div>
+  <div class="col-sm-10 col-md-10 col-lg-12">
+    <div class="row">
+      {% for family in family_list %}
+      <div class="col-sm-12 col-md-6 col-lg-4">
+	
+	<div class="media" style="margin-left: 10px;">
+	  <div class="media-left media-middle">
+	    <a href="{% url 'webapp:wildflowers_family' family.id %}">
+	      <img class="media-object" src="http://placehold.it/80x80" alt="{{ family.icon_file_name }}" width="80" height="80">
+	    </a>
+	  </div>
+	  <div class="media-body media-middle">
+	    <dl>
+	      <dt class="media-heading">
+		<a href="{% url 'webapp:wildflowers_family' family.id %}">
+		  {{ family.scientific_name }}
+		</a>
+	      </dt>
+	      <dd>
+		<a href="{% url 'webapp:wildflowers_family' family.id %}">
+		  veslve, ces or seoc family
+		</a>
+	    </dd>
+	    </dl>
+	  </div>
+	</div>
+      </div><!-- /.col-md-6 col-lg-4-->
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-sm-1 col-md-1"></div>
+</div>
 {% else %}
 <p>No families are available.</p>
 {% endif %}
+{% endblock %}
+
+
+
+	

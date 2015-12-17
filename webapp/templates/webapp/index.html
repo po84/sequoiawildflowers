@@ -1,80 +1,48 @@
-{% load staticfiles %}
-<html>
-  <head>
-    <title>Sequoia Wildflowers</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+{% extends 'webapp/base.html' %}
+{% block plug_in_content %}
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div class="row"><h1>Welcome</h1></div>
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{% static 'webapp/style.css' %}" />
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  </head>
+    <div class="row">
+      <div class="paddedText">
+      <p>We like to visit Sequoia and Kings Canyon National Parks several times a year, usually from late spring until early fall.  We like to visit other national parks as well, especially those in California, but find ourselves returning to Sequoia and Kings Canyon over and over.  In many ways, we enjoy these parks much more than their more popular Sierra Nevada cousin, Yosemite National Park.  Everyone should certainly experience Yosemite at least once in their lives, but Sequoia and Kings Canyon are equally beautiful and rich with life, but without the huge crowds, without the need to make reservations months in advance and without tiny campsites packed together like sardines.  Sequoia and Kings Canyon feel more like wilderness than civilization.  Today, these parks are much like the Yosemite of decades ago.</p>
+      </div>
+    </div>
 
-  <body role="document">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Sequoia Wildflowers</a>
-        </div><!--/.nav-header -->
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Wildflowers</a></li>
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div><!--/.container -->
-    </nav>
+    <div class="row">
+      <div class="col-md-6">
+      <a href="#">
+    	<img src="http://placehold.it/324x243" width="324" height="243" alt="" /></a>
+      </div>
+      <div class="col-md-6">
+	We enjoy going on a lot of hikes throughout the parks, and we are always curious about the plants and animals around us.  We are not botanists, just hobbyists.  Over the years we have acquired a lot of pictures and a lot of guidebooks, and decided to share our accumulated knowledge through this website.
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+<p>The site is primarily dedicated to identification of wildflowers found in Sequoia and Kings Canyon National Parks, but we have added a few other sections.  You can choose to view the wildflowers organized by common name, scientific name, family, or color.  We also have few <a href="#">Mystery Plants</a> we have not been able to identify.  If you can help us identify any of these, or would just like to comment on the site, please <a href="#">contact us</a>! Many of the species contained here can be found elsewhere in the Sierras, Central Valley, Bay Area or beyond.  Though we have only included species here that we found in or around Sequoia or Kings Canyon, we hope this guide can be helpful for those visiting Yosemite or other parks or even help you identify flowers in your neighborhood!</p>
+      </div>
+      <div class="col-md-6">
+<a href="#">
+	<img src="http://placehold.it/324x486" alt="" width="324" height="486" /></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+      <a href="#">
+    	<img src="http://placehold.it/324x486" width="324" height="486" alt="" /></a>
+      </div>
+      <div class="col-md-6">
+<p>We have also toyed with 3D photography for a couple of years and our photos are getting better and better. Part of the motivation for building a 3D camera was to try to capture the grandeur of areas like the Sierra Nevada that can sometimes be awe-inspiring in person, but lose something when photographed.  You can see some sample images and read more about 3D photography in the <a href="#">3D Images</a> section.</p> 
 
-    <div class="container main-container">
-      <!-- Main jumbotron for a primary marketing message or call to action -->
+<p>In addition, we have provided a <a href="{% url 'webapp:wildflowers_references' %}">Reference Section</a> containing books and websites we have found to be helpful.<!--If you enjoy this website and would like to learn more, please buy one of these books or other items you find here through our links. These are the products we use from the places we purchased them.  It will not cost you anything extra; just offer a little support to help us continue to develop this site. --> </p>      </div>
+    </div>
+  </div><!-- /.col-md-8 -->
+  <div class="col-md-2"></div>
+</div><!-- /.row -->
 
-      <div class="row stripe-background">
-	<div class="col-md-12">
-	  <div class="jumbotron">
-	  </div>
-	</div>
-      </div><!-- /.row -->
 
-      <div class="row">
-	<div class="col-md-12">
-	</div>
-      </div><!-- /.row -->
 
-      <div class="row">
-	<div class="col-md-12">
-	  <ul class="list-group">
-	    <li class="list-group-item">
-	      <a href="{% url 'webapp:wildflowers_by_common_name' %}">
-		By Common Name</a>
-	    </li>
-	    <li class="list-group-item">
-	      <a href="{% url 'webapp:wildflowers_by_scientific_name' %}">
-		By Scientific Name</a>
-	    </li>
-	    <li class="list-group-item">
-	      <a href="{% url 'webapp:wildflowers_by_family' %}">
-		By Family</a>
-	    </li>
-	    <li class="list-group-item">
-	      <a href="{% url 'webapp:wildflowers_by_color_range' %}">
-		By Color</a>
-	    </li>
-	  </ul>
-	</div><!-- /.col-lg-12 -->
-      </div><!-- /.row -->
-    </div> <!-- /container -->
-
-  </body>
-</html>
+{% endblock %}

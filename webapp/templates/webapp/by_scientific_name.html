@@ -1,25 +1,51 @@
+{% extends 'webapp/base.html' %}
+{% block plug_in_content %}
 {% if plant_scientific_name_list %}
-<h1>This is the by scientific name page!</h1>
-<ul>
+<div class="row">
+  <h1>Wildflowers by Scientific Name</h1>
+</div>
+<div class="row">
   {% for plant_scientific_name in plant_scientific_name_list %}
-  <li>
+  <div class="col-md-6 col-lg-4">
+    <h3>
+      <a href="{% url 'webapp:wildflowers_detail' plant_scientific_name.id %}">
+	{{ plant_scientific_name }}
+      </a>
+    </h3>
     {% for image in plant_scientific_name.imageinfo_set.all %}
     {% if image.primary %}
-    <p>{{ image }}</p>
+    <div class="ImageBox">
+      <a href="{% url 'webapp:wildflowers_detail' plant_scientific_name.id %}">
+	<span></span>
+	<img height="243" alt="{{ image }}" src="http://placehold.it/324x243" width="324" />
+      </a>
+    </div>
     {% endif %}
     {% endfor %}
-    <a href="{% url 'webapp:wildflowers_detail' plant_scientific_name.id %}">
-      <p>{{ plant_scientific_name }}</p>
-      <p>{{ plant_scientific_name.family.scientific_name }}</p>
-    {% for common_name in plant_scientific_name.plantcommonname_set.all %}
-    {% if common_name.primary %}
-      <p>{{ common_name }}</p>
-    {% endif %}
-    {% endfor %}
-    </a>
-  </li>
+    <dl>
+      <dt>
+	{% for common_name in plant_scientific_name.plantcommonname_set.all %}
+	{% if common_name.primary %}
+	<a href="{% url 'webapp:wildflowers_detail' plant_scientific_name.id %}">
+	{{ common_name }}
+	</a>
+	{% endif %}
+	{% endfor %}
+      </dt>
+      <dd>
+	<a href="{% url 'webapp:wildflowers_family' plant_scientific_name.family_id %}">
+	  {{ plant_scientific_name.family.scientific_name }}
+	</a>
+      </dd>
+    </dl>
+  </div><!-- /.col-md-6 col-lg-4-->
   {% endfor %}
-</ul>
+</div><!-- /.row -->
 {% else %}
 <p>No plant scientific names are available.</p>
 {% endif %}
+{% endblock %}
+
+
+
+
