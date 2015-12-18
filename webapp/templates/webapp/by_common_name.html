@@ -17,7 +17,7 @@
       <a href="{% url 'webapp:wildflowers_detail' plant_common_name.plant_id %}">
 	<span></span>
 	{% load staticfiles %}
-	<img height="243" alt="{{ plant_common_name.plant.primary_image_file_name }}" src="/static/webapp/images/thumbnails/{{plant_common_name.plant.primary_image_file_name}}" width="324" />
+	<img height="243" alt="{{ plant_common_name.plant.primary_image_file_name }}" src="{% static 'webapp/images/thumbnails/' %}{{plant_common_name.plant.primary_image_file_name}}" width="324" />
       </a>
     </div>
     <dl>
