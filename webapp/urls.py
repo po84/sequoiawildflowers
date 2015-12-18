@@ -6,6 +6,10 @@ app_name = 'webapp'
 urlpatterns = [
     # ex: /wildflowers/
     url(r'^$', views.index, name='wildflowers_index'),
+    # ex: /wildflowers/references/
+    url(r'^refernces/$', views.references, name='wildflowers_references'),
+    # ex: /wildflowers/about_us?
+    url(r'^about_us/$', views.about_us, name='wildflowers_about_us'),
     # ex: /wildflowers/by_common_name/
     url(r'^by_common_name/$',
         views.ByCommonNameView.as_view(),

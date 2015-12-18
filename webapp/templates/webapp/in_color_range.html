@@ -9,26 +9,18 @@
   {% for plant in plants_in_color_range_list %}
   <div class="col-md-6 col-lg-4">
 
-    {% for common_name in plant.plantcommonname_set.all %}
-    {% if common_name.primary %}
     <h3>
       <a href="{% url 'webapp:wildflowers_detail' plant.id %}">
-	{{ common_name }}
+	{{ plant.primary_common_name }}
       </a>
     </h3>
-    {% endif %}
-    {% endfor %}
 
-    {% for image in plant.imageinfo_set.all %}
-    {% if image.primary %}
     <div class="ImageBox">
       <a href="{% url 'webapp:wildflowers_detail' plant.id %}">
 	<span></span>
-	<img height="243" alt="{{ image }}" src="http://placehold.it/324x243" width="324" />
+	<img height="243" alt="{{ plant.primary_image_file_name }}" src="/static/webapp/images/thumbnails/{{plant.primary_image_file_name}}" width="324" />
       </a>
     </div>
-    {% endif %}
-    {% endfor %}
     <dl>
       <dt>
 	<a href="{% url 'webapp:wildflowers_detail' plant.id %}">

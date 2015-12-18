@@ -5,7 +5,7 @@ from .models import Family, FamilyCommonName, ImageInfo
 from .models import ColorRange, Plant, PlantCommonName
 from datetime import date
 import random
-# Create your tests here.
+from PIL import Image
 
 
 def create_database():
@@ -194,28 +194,153 @@ class DatabaseTests(TestCase):
         create_database()
         cr_id = ColorRange.objects.filter(color_range='green').get().id
         f1 = Plant.objects.filter(imageinfo__color_range_id=cr_id).all()
-#        f1 = all_plants[0].imageinfo_set.filter(color_range_id=cr_id).all()
+        # f1 = all_plants[0].imageinfo_set.filter(color_range_id=cr_id).all()
         number_of_entries = f1.count()
         self.assertEqual(number_of_entries, 1)
 
 
-class PlantCommonNameMethodTests(TestCase):
-    def test_is_primary_common_name_with_primary_set_to_true(self):
+class FamilyMethodTests(TestCase):
+    def test_get_formatted_common_names_with_no_common_names(self):
         """
-        is_primary_common_name() should return True for common names whose
-        primary arribute is True.
+        formatted_common_names should be None if there are no common names.
         """
-        plant_common_name = PlantCommonName(primary=True)
-        self.assertEqual(plant_common_name.is_primary_common_name(), True)
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        self.assertEqual(family.formatted_common_names, None)
 
-    def test_is_primary_common_name_with_primary_set_to_false(self):
+    def test_get_formatted_common_names_with_one_common_name(self):
         """
-        is_primary_common_name() should return False for common names whose
-        primary arribute is False.
+        formatted_common_names should be "some name" if there is
+        only one common name.
         """
-        plant_common_name = PlantCommonName(primary=False)
-        self.assertEqual(plant_common_name.is_primary_common_name(), False)
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        family.familycommonname_set.create(common_name='some name')
+        self.assertEqual(family.formatted_common_names, 'some name')
 
+    def test_get_formatted_common_names_with_two_common_names(self):
+        """
+        formatted_common_names should be 'some name or some name'
+        if there are two common names.
+        """
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        family.familycommonname_set.create(common_name='some name')
+        family.familycommonname_set.create(common_name='some name')
+        self.assertEqual(
+            family.formatted_common_names, 'some name or some name')
+
+    def test_get_formatted_common_names_with_more_than_two_common_names(self):
+        """
+        formatted_common_names should be 'some name, some name or some name'
+        if there are more than two common names.
+        """
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        family.familycommonname_set.create(common_name='some name')
+        family.familycommonname_set.create(common_name='some name')
+        family.familycommonname_set.create(common_name='some name')
+        self.assertEqual(family.formatted_common_names,
+                         'some name, some name or some name')
+
+
+class PlantMethodTests(TestCase):
+    def test_get_formatted_common_names_with_no_common_names(self):
+        """
+        formatted_common_names should be None if there are no common names.
+        """
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        plant = family.plant_set.create(scientific_name='plant 1',
+                                        plant_type='plant type',
+                                        date_added=date(2012, 05, 20))
+        self.assertEqual(plant.formatted_common_names, None)
+
+    def test_get_formatted_common_names_with_one_common_name(self):
+        """
+        formatted_common_names should be 'primary name'
+        if there is only one common name.
+        """
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        plant = family.plant_set.create(scientific_name='plant 1',
+                                        plant_type='plant type',
+                                        date_added=date(2012, 05, 20))
+        plant.plantcommonname_set.create(
+            common_name='primary name', primary=True)
+        self.assertEqual(plant.formatted_common_names, 'primary name')
+
+    def test_get_formatted_common_names_with_two_common_names(self):
+        """
+        formatted_common_names should be 'primary name or other name'
+        if there are more than two common names.
+        """
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        plant = family.plant_set.create(scientific_name='plant 1',
+                                        plant_type='plant type',
+                                        date_added=date(2012, 05, 20))
+        plant.plantcommonname_set.create(
+            common_name='other name', primary=False)
+        plant.plantcommonname_set.create(
+            common_name='primary name', primary=True)
+        self.assertEqual(
+            plant.formatted_common_names, 'primary name or other name')
+
+    def test_get_formatted_common_names_with_more_than_two_common_names(self):
+        """
+        formatted_common_names should be
+        'primary name, other name or other name'
+        if there are more than two common names.
+        """
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        plant = family.plant_set.create(scientific_name='plant 1',
+                                        plant_type='plant type',
+                                        date_added=date(2012, 05, 20))
+        plant.plantcommonname_set.create(
+            common_name='other name', primary=False)
+        plant.plantcommonname_set.create(
+            common_name='other name', primary=False)
+        plant.plantcommonname_set.create(
+            common_name='primary name', primary=True)
+        self.assertEqual(plant.formatted_common_names,
+                         'primary name, other name or other name')
+
+    def test_get_primary_common_name(self):
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        plant = family.plant_set.create(scientific_name='plant 1',
+                                        plant_type='plant type',
+                                        date_added=date(2012, 05, 20))
+        plant.plantcommonname_set.create(
+            common_name='other name', primary=False)
+        plant.plantcommonname_set.create(
+            common_name='primary name', primary=True)
+        self.assertEqual(plant.primary_common_name, 'primary name')
+
+    def test_get_primary_image_file_name(self):
+        family = Family.objects.create(scientific_name='family 1',
+                                       icon_file_name='family_icon.jpg')
+        plant = family.plant_set.create(scientific_name='plant 1',
+                                        plant_type='plant type',
+                                        date_added=date(2012, 05, 20))
+        color = ColorRange.objects.create(
+            color_range='blue', icon_file_name='color_icon.jpg')
+
+        ImageInfo.objects.create(plant=plant,
+                                 color_range=color,
+                                 file_name='img1.jpg',
+                                 image_width=300,
+                                 image_height=200,
+                                 primary=False)
+        ImageInfo.objects.create(plant=plant,
+                                 color_range=color,
+                                 file_name='img2.jpg',
+                                 image_width=300,
+                                 image_height=200,
+                                 primary=True)
+        self.assertEqual(plant.primary_image_file_name, 'img2.jpg')
 
 class ImageInfoMethodTests(TestCase):
     def test_is_landscape_orientation_with_landscape_image(self):
@@ -413,3 +538,194 @@ class PlantDetailViewTests(TestCase):
         response = self.client.get(
             reverse('webapp:wildflowers_detail', args=(plant_id,)))
         self.assertContains(response, plant.scientific_name, status_code=200)
+
+
+def insert_family_sci_name():
+    txt_file = open('family_name.csv', 'r')
+    txt_lines = txt_file.readlines()
+    for item in txt_lines:
+        cleaned_item = item.rstrip()
+        name_group = cleaned_item.split(',')
+        sci_name = name_group[0]
+        com_names = name_group[1].split(';')
+        new_family = Family.objects.create(
+            scientific_name=sci_name,
+            icon_file_name='family_icon_placeholder')
+
+        for item in com_names:
+            new_family.familycommonname_set.create(common_name=item)
+
+
+def insert_plant():
+    """ TODO_LIST: need to delete before deployment"""
+    txt_file = open('plant_name.csv', 'r')
+    txt_lines = txt_file.readlines()
+    for item in txt_lines:
+        item_fields = item.split(',')
+        plant_name = item_fields[0]
+        family_name = item_fields[1]
+        plant_type = item_fields[2]
+        date_fileds = item_fields[3].split('/')
+        date_added = date(int(date_fileds[2]),
+                          int(date_fileds[0]),
+                          int(date_fileds[1]))
+
+        q_family = Family.objects.all().filter(
+            scientific_name=family_name).get()
+
+        q_family.plant_set.create(scientific_name=plant_name,
+                                  plant_type=plant_type,
+                                  date_added=date_added)
+
+
+def insert_everything():
+    """ TODO_LIST: need to delete before deployment"""
+    all_plant_entries = open('all_entries.csv', 'r')
+    all_img_links = open('img_link.data', 'r')
+    # construct a dict for web page and images
+    img_dict = {}
+    img_links_lines = all_img_links.readlines()
+    # add all the colors
+    color_blue = ColorRange.objects.create(
+        color_range='blue-purple', icon_file_name='color_icon_placeholder')
+    color_yellow = ColorRange.objects.create(
+        color_range='yellow-orange', icon_file_name='color_icon_placeholder')
+    color_pink = ColorRange.objects.create(
+        color_range='red-pink', icon_file_name='color_icon_placeholder')
+    color_white = ColorRange.objects.create(
+        color_range='white-cream', icon_file_name='color_icon_placeholder')
+    color_dict = {}
+    color_dict['blue'] = color_blue
+    color_dict['yellow'] = color_yellow
+    color_dict['pink'] = color_pink
+    color_dict['white'] = color_white
+
+    for entry in img_links_lines:
+        entry = entry.rstrip()
+        entry_fields = entry.split(':')
+        web_page_name = entry_fields[0]
+        img_dict[web_page_name] = []
+        img_files = entry_fields[1].split(',')
+        img_files.pop()
+        for item in img_files:
+            img_dict[web_page_name].append(item)
+
+    all_plant_entries_lines = all_plant_entries.readlines()
+    for plant_entry in all_plant_entries_lines:
+        plant_entry = plant_entry.rstrip()
+        entry_fields = plant_entry.split(',')
+        page_name = entry_fields[0]
+        plant_common_name = entry_fields[1]
+        plant_sci_name = entry_fields[2]
+        plant_family = entry_fields[3]
+        plant_color = entry_fields[4]
+        plant_color = plant_color.lower()
+        plant_type = entry_fields[5]
+        plant_added_date_string = entry_fields[6]
+        print "processing " + plant_sci_name
+        # get python date object from date_string
+        date_fileds = plant_added_date_string.split('/')
+        plant_date_added = date(int(date_fileds[2]),
+                                int(date_fileds[0]),
+                                int(date_fileds[1]))
+        # get plant family db object
+        q_family = Family.objects.all().filter(
+            scientific_name=plant_family).get()
+
+        # adding actual entry
+        new_plant = q_family.plant_set.create(scientific_name=plant_sci_name,
+                                              plant_type=plant_type,
+                                              date_added=plant_date_added)
+
+
+        # processing image info
+#        image_db_entries = []
+        # page_name
+        for each_img in img_dict[page_name]:
+            folder_path = "/home/potong/Documents/sequoiawildflowers/static/images/optimized/"
+            actual_img_path = folder_path + each_img
+            try:
+                photo = Image.open(actual_img_path)
+            except:
+                raise ValueError("can't open file: " + each_img)
+            photo_width = photo.size[0]
+            photo_height = photo.size[1]
+
+            ImageInfo.objects.create(plant=new_plant,
+                                     color_range=color_dict[plant_color],
+                                     file_name=each_img,
+                                     image_width=photo_width,
+                                     image_height=photo_height,
+                                     primary=False)
+
+#            image_db_entries.append(new_img)
+
+        # format common name by switching out semi colon with comma
+        # then add new CommonPlantName into db
+        plant_common_name = plant_common_name.replace(';', ',')
+        new_plant.plantcommonname_set.create(common_name=plant_common_name,
+                                             primary=True)
+
+
+def set_primary_image():
+    all_plants = Plant.objects.all()
+    for item in all_plants:
+        all_images = item.imageinfo_set.all()
+        keep_going = True
+        for image in all_images:
+            if keep_going:
+                if image.image_width > image.image_height:
+                    image.primary = True
+                    image.save()
+                    keep_going = False
+
+
+def set_color_icon():
+    all_colors = ColorRange.objects.all()
+    blue = all_colors.filter(color_range='blue-purple').get()
+    red = all_colors.filter(color_range='red-pink').get()
+    yellow = all_colors.filter(color_range='yellow-orange').get()
+    white = all_colors.filter(color_range='white-cream').get()
+    blue.color_range = 'Blue-Purple'
+    blue.icon_file_name = 'blue-purple-flowers.jpg'
+    blue.save()
+    red.color_range = 'Red-Pink'
+    red.icon_file_name = 'red-pink-flowers.jpg'
+    red.save()
+    yellow.color_range = 'Yellow-Orange'
+    yellow.icon_file_name = 'yellow-orange-flowers.jpg'
+    yellow.save()
+    white.color_range = 'White-Cream'
+    white.icon_file_name = 'white-cream-flowers.jpg'
+    white.save()
+
+
+def set_family_icon():
+    all_families = Family.objects.all()
+    for item in all_families:
+        name = item.scientific_name
+        name = name.lower()
+        file_name = name + '.jpg'
+        item.icon_file_name = file_name
+        item.save()
+
+
+def set_portrait_image_to_default():
+    all_plants = Plant.objects.all()
+    for item in all_plants:
+        if not item.primary_image_file_name:
+            print '###########################'
+            print 'NO PRIMARY'
+            print '###########################'
+            image_set = item.imageinfo_set.all()
+            want_id = image_set[0].id
+            photo = ImageInfo.objects.filter(id=want_id).get()
+            photo.primary = True
+            photo.save()
+
+# insert_family_sci_name()
+# insert_everything()
+# set_primary_image()
+# set_color_icon()
+# set_family_icon()
+set_portrait_image_to_default()

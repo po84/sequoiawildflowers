@@ -1,4 +1,5 @@
 {% extends 'webapp/base.html' %}
+
 {% block plug_in_content %}
 {% if plant_common_name_list %}
 <div class="row">
@@ -12,16 +13,13 @@
 	{{ plant_common_name }}
       </a>
     </h3>
-    {% for image in plant_common_name.plant.imageinfo_set.all %}
-    {% if image.primary %}
     <div class="ImageBox">
       <a href="{% url 'webapp:wildflowers_detail' plant_common_name.plant_id %}">
 	<span></span>
-	<img height="243" alt="{{ image }}" src="http://placehold.it/324x243" width="324" />
+	{% load staticfiles %}
+	<img height="243" alt="{{ plant_common_name.plant.primary_image_file_name }}" src="/static/webapp/images/thumbnails/{{plant_common_name.plant.primary_image_file_name}}" width="324" />
       </a>
     </div>
-    {% endif %}
-    {% endfor %}
     <dl>
       <dt>
 	<a href="{% url 'webapp:wildflowers_detail' plant_common_name.plant_id %}">

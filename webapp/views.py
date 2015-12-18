@@ -81,3 +81,11 @@ class PlantDetailView(generic.DetailView):
 
 def index(request):
     return render(request, 'webapp/index.html')
+
+
+def references(request):
+    return render(request, 'webapp/references.html')
+
+
+def about_us(request):
+    return render(request, 'webapp/about_us.html')
