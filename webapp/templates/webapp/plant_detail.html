@@ -19,7 +19,7 @@
 	{% for image_info in plant.imageinfo_set.all %}
 	<div class="col-sm-6 col-md-6 col-lg-6">
 	  <a href="#">
-	    <img src="/static/webapp/images/thumbnails/{{ image_info.file_name }}" alt="{{ image_info.file_name }}">
+	    <img src="{% static 'webapp/images/thumbnails/' %}{{ image_info.file_name }}" alt="{{ image_info.file_name }}">
 	  </a>
 	</div><!-- /.col-sm-6 col-md-6 col-lg-6 -->
 	{% endfor %}

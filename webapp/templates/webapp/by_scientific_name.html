@@ -15,7 +15,7 @@
     <div class="ImageBox">
       <a href="{% url 'webapp:wildflowers_detail' plant_scientific_name.id %}">
 	<span></span>
-	<img height="243" alt="{{ plant_scientific_name.primary_image_file_name }}" src="/static/webapp/images/thumbnails/{{plant_scientific_name.primary_image_file_name}}" width="324" />
+	<img height="243" alt="{{ plant_scientific_name.primary_image_file_name }}" src="{% static 'webapp/images/thumbnails/' %}{{plant_scientific_name.primary_image_file_name}}" width="324" />
       </a>
     </div>
     <dl>

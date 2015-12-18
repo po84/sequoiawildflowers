@@ -14,7 +14,7 @@
 	<div class="media" style="margin-left: 10px;">
 	  <div class="media-left media-middle">
 	    <a href="{% url 'webapp:wildflowers_family' family.id %}">
-	      <img class="media-object" src="/static/webapp/images/icons/family/{{family.icon_file_name}}" alt="{{ family.icon_file_name }}" width="80" height="80">
+	      <img class="media-object" src="{% static 'webapp/images/icons/family/' %}{{family.icon_file_name}}" alt="{{ family.icon_file_name }}" width="80" height="80">
 	    </a>
 	  </div>
 	  <div class="media-body media-middle">
