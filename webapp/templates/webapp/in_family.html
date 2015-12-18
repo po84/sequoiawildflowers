@@ -1,5 +1,6 @@
 {% extends 'webapp/base.html' %}
 {% block plug_in_content %}
+{% load staticfiles %}
 {% if plants_in_family_list %}
 <div class="row">
   <h1>{{plants_in_family_list.0.family.scientific_name}}</h1>

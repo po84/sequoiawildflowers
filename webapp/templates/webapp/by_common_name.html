@@ -1,6 +1,7 @@
 {% extends 'webapp/base.html' %}
 
 {% block plug_in_content %}
+{% load staticfiles %}
 {% if plant_common_name_list %}
 <div class="row">
   <h1>Wildflowers by Common Name</h1>
@@ -16,7 +17,7 @@
     <div class="ImageBox">
       <a href="{% url 'webapp:wildflowers_detail' plant_common_name.plant_id %}">
 	<span></span>
-	{% load staticfiles %}
+
 	<img height="243" alt="{{ plant_common_name.plant.primary_image_file_name }}" src="{% static 'webapp/images/thumbnails/' %}{{plant_common_name.plant.primary_image_file_name}}" width="324" />
       </a>
     </div>
