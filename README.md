@@ -1,4 +1,4 @@
-# sequoiawildflowers
+# sequoiawildflowers (work in progress)
 This is a dynamic website which catalogs the wildflowers one may find in the Sequoia National Park</br>
 Link: <a href="http://ec2-52-32-25-251.us-west-2.compute.amazonaws.com/webapp/wildflowers/">Sequoia Wildflowers</a></br>
 
